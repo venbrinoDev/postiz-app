@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title">
+  <title id="title">Jovita Socials</title>
+  <rect width="256" height="256" rx="54" fill="#15163A"/>
+  <path d="M102 59v114c0 24-15 39-38 39-14 0-26-6-34-18" fill="none" stroke="#7C6CF5" stroke-width="33" stroke-linecap="round"/>
+  <path d="M116 113h31m-12-2 40-39m-39 43 39 40" fill="none" stroke="#F8F7FF" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="189" cy="58" r="18" fill="#FF8A3D"/>
+  <circle cx="187" cy="113" r="18" fill="#7C6CF5"/>
+  <circle cx="189" cy="169" r="18" fill="#7C6CF5"/>
+</svg>

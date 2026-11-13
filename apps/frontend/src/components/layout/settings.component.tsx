@@ -242,6 +242,14 @@ export const SettingsPopup: FC<{
               )}
             </div>
           </form>
+          <a
+            href="https://github.com/venbrinoDev/postiz-app/tree/jovita-socials"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[12px] text-textItemBlur underline"
+          >
+            Jovita Socials source code (AGPL-3.0)
+          </a>
         </FormProvider>
       </div>
     </>

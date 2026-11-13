@@ -231,7 +231,7 @@ export function RegisterAfter({
                 )}
                 &nbsp;
                 <a
-                  href={`https://postiz.com/terms`}
+                  href="https://usejovita.com/terms-and-conditions"
                   className="underline hover:font-bold"
                   rel="nofollow"
                 >
@@ -240,7 +240,7 @@ export function RegisterAfter({
                 &nbsp;
                 {t('and', 'and')}&nbsp;
                 <a
-                  href={`https://postiz.com/privacy`}
+                  href="https://usejovita.com/privacy-policy"
                   rel="nofollow"
                   className="underline hover:font-bold"
                 >

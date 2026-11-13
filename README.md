@@ -1,3 +1,7 @@
+# Jovita Socials branch
+
+This branch contains Jovita's branded social publishing service. See [JOVITA_SOCIALS.md](JOVITA_SOCIALS.md) for modifications and source availability. The upstream Postiz documentation follows below.
+
 <p align="center">
   <a href="https://postiz.com/" target="_blank">
   <picture>
