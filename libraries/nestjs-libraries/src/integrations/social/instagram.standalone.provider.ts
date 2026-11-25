@@ -89,19 +89,24 @@ export class InstagramStandaloneProvider
       )
     ).json();
 
+    if (!access_token) {
+      throw new Error('Instagram token refresh failed');
+    }
+
     const {
+      id,
       user_id,
       name,
       username,
       profile_picture_url = '',
     } = await (
       await fetch(
-        `https://graph.instagram.com/${META_GRAPH_API_VERSION}/me?fields=user_id,username,name,profile_picture_url&access_token=${access_token}`
+        `https://graph.instagram.com/${META_GRAPH_API_VERSION}/me?fields=id,username,name,profile_picture_url&access_token=${access_token}`
       )
     ).json();
 
     return {
-      id: user_id,
+      id: user_id || id,
       name,
       accessToken: access_token,
       refreshToken: access_token,
@@ -167,7 +172,7 @@ export class InstagramStandaloneProvider
       );
     }
 
-    const { access_token, expires_in, ...all } = await (
+    const longLivedToken = await (
       await fetch(
         'https://graph.instagram.com/access_token' +
           '?grant_type=ig_exchange_token' +
@@ -176,6 +181,21 @@ export class InstagramStandaloneProvider
           `&access_token=${getAccessToken.access_token}`
       )
     ).json();
+
+    if (!longLivedToken.access_token) {
+      console.error('Instagram standalone long-lived token exchange failed:', {
+        type: longLivedToken.error?.type,
+        code: longLivedToken.error?.code,
+        subcode: longLivedToken.error?.error_subcode,
+      });
+      throw new Error(
+        longLivedToken.error?.message ||
+          longLivedToken.error_message ||
+          'Instagram long-lived token exchange failed'
+      );
+    }
+
+    const { access_token } = longLivedToken;
 
     try {
       this.checkScopes(this.scopes, getAccessToken.permissions);
@@ -190,14 +210,26 @@ export class InstagramStandaloneProvider
       throw err;
     }
 
-    const { user_id, name, username, profile_picture_url } = await (
+    const profile = await (
       await fetch(
-        `https://graph.instagram.com/${META_GRAPH_API_VERSION}/me?fields=user_id,username,name,profile_picture_url&access_token=${access_token}`
+        `https://graph.instagram.com/${META_GRAPH_API_VERSION}/me?fields=id,username,name,profile_picture_url&access_token=${access_token}`
       )
     ).json();
 
+    if (profile.error) {
+      throw new Error(
+        profile.error.message || 'Instagram profile lookup failed'
+      );
+    }
+
+    const { id, user_id, name, username, profile_picture_url } = profile;
+    const accountId = user_id || id || getAccessToken.user_id;
+    if (!accountId) {
+      throw new Error('Instagram did not return an account ID');
+    }
+
     return {
-      id: user_id,
+      id: accountId,
       name,
       accessToken: access_token,
       refreshToken: access_token,
